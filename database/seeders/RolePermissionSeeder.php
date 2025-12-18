@@ -23,10 +23,6 @@ class RolePermissionSeeder extends Seeder
             'create categories',
             'edit categories',
             'delete categories',
-            'view tags',
-            'create tags',
-            'edit tags',
-            'delete tags',
             'view subscribers',
             'delete subscribers',
             'view users',
@@ -57,10 +53,6 @@ class RolePermissionSeeder extends Seeder
             'create categories',
             'edit categories',
             'delete categories',
-            'view tags',
-            'create tags',
-            'edit tags',
-            'delete tags',
             'view subscribers',
             'delete subscribers',
             'manage roles',
@@ -72,8 +64,6 @@ class RolePermissionSeeder extends Seeder
             'edit posts',
             'view categories',
             'edit categories',
-            'view tags',
-            'edit tags',
 
         ]);
 
@@ -83,7 +73,6 @@ class RolePermissionSeeder extends Seeder
             'create posts',
             'edit own posts',
             'view categories',
-            'view tags',
             'delete own posts',
         ]);
 

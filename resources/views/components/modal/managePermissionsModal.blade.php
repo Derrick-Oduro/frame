@@ -7,9 +7,9 @@
 
     <div class="modal-content-{{ $role->id }} fixed inset-0 flex items-center justify-center hidden z-50">
 
-        <div class="bg-white p-6 rounded-lg w-full max-w-4xl shadow-xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+        <div class="bg-white p-2 w-full max-w-4xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
 
-            <h3 class="text-xl font-bold mb-6">Manage Permissions for "{{ $role->name }}" Role</h3>
+            <h3 class="text-lg font-bold mb-6">Manage Permissions for "{{ $role->name }}" Role</h3>
 
             <form action="{{ route('role.permissions.update', $role->id) }}" method="POST">
                 @csrf
@@ -24,14 +24,14 @@
                 @endphp
 
                 @foreach($groupedPermissions as $category => $permissions)
-                <div class="mb-6 border rounded-lg p-4 bg-gray-50">
-                    <h4 class="font-semibold text-lg mb-4 capitalize">{{ $category }}</h4>
+                <div class="mb-2 p-4 bg-white">
+                    <h4 class="font-semibold text-sm mb-4 capitalize">{{ $category }}</h4>
 
                     <div class="space-y-3">
                         @foreach($permissions as $permission)
-                        <label class="flex items-center justify-between p-3 bg-white rounded border hover:bg-gray-50 cursor-pointer">
+                        <label class="flex items-center justify-between p-2 text-sm bg-white rounded border hover:bg-gray-50 cursor-pointer">
                             <span class="font-medium">{{ $permission->name }}</span>
-                            <div class="relative inline-block w-12 h-6 transition duration-200 ease-linear">
+                            <div class="relative inline-block w-11 h-5 transition duration-200 ease-linear">
                                 <input
                                     type="checkbox"
                                     name="permissions[]"
@@ -40,7 +40,7 @@
                                     class="toggle-checkbox opacity-0 w-0 h-0 peer"
                                 />
                                 <span class="toggle-slider absolute cursor-pointer inset-0 bg-gray-300 rounded-full transition peer-checked:bg-blue-600">
-                                    <span class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition peer-checked:translate-x-6"></span>
+                                    <span class="toggle-dot absolute left-1 top-1 bg-white w-3 h-3 rounded-full transition peer-checked:translate-x-6"></span>
                                 </span>
                             </div>
                         </label>

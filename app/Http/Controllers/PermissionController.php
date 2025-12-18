@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Permission;
+
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
@@ -57,7 +58,7 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        dd($request->all());
+
         $request->validate([
             'permissions' => 'array',
             'permissions.*' => 'exists:permissions,id',
