@@ -12,6 +12,9 @@ class TenantController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('manage tenants')) {
+            abort(403, 'Unauthorized action.');
+        }
         $tenants = Tenant::all();
         return view("admin.tenant", compact("tenants"));
     }
@@ -29,6 +32,9 @@ class TenantController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('manage tenants')) {
+            abort(403, 'Unauthorized action.');
+        }
         $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:tenants,slug',
@@ -66,6 +72,9 @@ class TenantController extends Controller
      */
     public function update(Request $request, Tenant $tenant)
     {
+        if (!auth()->user()->can('manage tenants')) {
+            abort(403, 'Unauthorized action.');
+        }
         $request->validate([
             'name' => 'required|string|max:255',
             'slug'=> 'required|string|max:255|unique:tenants,slug,' . $tenant->id,
@@ -86,6 +95,9 @@ class TenantController extends Controller
      */
     public function destroy(Tenant $tenant)
     {
+        if (!auth()->user()->can('manage tenants')) {
+            abort(403, 'Unauthorized action.');
+        }
         $tenant->delete();
         return redirect()->route('tenants.index')->with('success', 'Tenant deleted successfully.');
     }

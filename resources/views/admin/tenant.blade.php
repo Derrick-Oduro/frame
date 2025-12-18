@@ -1,5 +1,7 @@
 <x-app-layout>
 
+
+    @can('manage tenants')
     <main class="w-4/5 p-6 bg-slate-50 min-h-screen w-full">
         <h1 class="text-2xl font-bold mb-4">Tenants</h1>
         <div class="mb-4">
@@ -50,6 +52,11 @@
         </table>
 
     </main>
+    @else
+        <div class="w-4/5 p-6 bg-slate-50 min-h-screen w-full flex items-center justify-center">
+            <h2 class="text-2xl font-bold text-red-600">You do not have permission to view this page.</h2>
+        </div>
+    @endcan
 
 </x-app-layout>
 

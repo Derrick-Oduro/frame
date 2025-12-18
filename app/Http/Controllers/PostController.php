@@ -12,6 +12,9 @@ class PostController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view posts')) {
+            abort(403, 'Unauthorized action.');
+        }
         $posts = Post::all();
 
         return view("admin.post", compact("posts"));
@@ -22,6 +25,9 @@ class PostController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create posts')) {
+            abort(403, 'Unauthorized action.');
+        }
         return view("components.modal.createPostModal");
     }
 
@@ -30,11 +36,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+         if (!auth()->user()->can('create posts')) {
+            abort(403, 'Unauthorized action.');
+        }
         $validateData= $request->validate([
             "title" => "required|string|max:255",
             "category_id" => "required|exists:categories,id",
             "body" => "required|string",
         ]);
+
         Post::create([
             "title" => $validateData["title"],
             "category_id"=> $validateData["category_id"],
@@ -57,7 +67,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        if (!auth()->user()->can('update', $post)) {
+        abort(403);
+    }
+
     }
 
     /**
@@ -65,6 +78,10 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if (!auth()->user()->can('update', $post)) {
+        abort(403);
+        }
+
         $validateData= $request->validate([
             "title" => "required|string|max:255",
             "category_id" => "required|exists:categories,id",
@@ -83,6 +100,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if (!auth()->user()->can('delete', $post)) {
+        abort(403);
+        }
         $post->delete();
         return redirect()->route("posts.index")->with("success","Post deleted successfully.");
     }

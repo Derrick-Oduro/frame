@@ -15,7 +15,10 @@ class PermissionController extends Controller
      */
     public function index()
     {
-         $roles = Role::with('permissions')->get();
+        if (!auth()->user()->can('manage permissions')) {
+            abort(403, 'Unauthorized action.');
+        }
+        $roles = Role::with('permissions')->get();
         $permissions = Permission::all();
 
         return view("admin.permissions", compact("permissions", "roles"));
@@ -58,6 +61,9 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        if (!auth()->user()->can('manage permissions')) {
+            abort(403, 'Unauthorized action.');
+        }
 
         $request->validate([
             'permissions' => 'array',

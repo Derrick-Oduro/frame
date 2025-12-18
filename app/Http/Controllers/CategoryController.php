@@ -12,6 +12,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('view categories')) {
+            abort(403, 'Unauthorized action.');
+        }
         $categories = Category::all();
         return view("admin.category", compact("categories"));
     }
@@ -29,6 +32,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can("create categories")) {
+            abort(403, 'Unauthorized action.');
+        }
         $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
@@ -63,6 +69,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        if(!auth()->user()->can('edit categories')) {
+            abort(403, 'Unauthorized action.');
+        }
         $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
@@ -81,6 +90,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if(!auth()->user()->can('delete categories')) {
+            abort(403, 'Unauthorized action.');
+        }
         $category->delete();
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully.') ;
     }

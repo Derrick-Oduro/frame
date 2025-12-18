@@ -12,7 +12,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        //WIth the users i made the the filtering here so the super-admin can see all users across tenants
+
+        if (auth()->user()->hasRole("super-admin")) {
+            $users = User::all();
+        } else {
+            $users = User::where('tenant_id', auth()->user()->tenant_id)->get();
+        }
         return view("admin.user", compact("users"));
     }
 
@@ -29,6 +35,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create users')) {
+            abort(403, 'Unauthorized action.');
+        }
         $validateData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -63,6 +72,9 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        if (!auth()->user()->can('edit users')) {
+            abort(403, 'Unauthorized action.');
+        }
         $validateData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
@@ -81,6 +93,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if (!auth()->user()->can('delete users')) {
+            abort(403, 'Unauthorized action.');
+        }
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }

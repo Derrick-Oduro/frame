@@ -13,6 +13,9 @@ class RoleController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('manage roles')) {
+            abort(403, 'Unauthorized action.');
+        }
         $users = User::where('tenant_id', auth()->user()->tenant_id)->get();
         $roles = Role::all();
         return view('admin.roles', compact('users','roles'));
@@ -60,6 +63,9 @@ class RoleController extends Controller
 
     public function assign(Request $request)
 {
+    if (!auth()->user()->can('manage roles')) {
+        abort(403, 'Unauthorized action.');
+    }
     $request->validate([
         'roles' => 'required|array',
         'roles.*' => 'required|in:admin,editor,author,guest',

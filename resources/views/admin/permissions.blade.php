@@ -1,6 +1,7 @@
 <x-app-layout>
+    @can('manage permissions')
     <main class="w-3/4 p-6 bg-slate-50 min-h-screen w-full">
-        <h1 class="text-2xl font-bold text-slate-900 mb-4">Role Permissions Management</h1>
+        <h1 class="text-2xl font-bold text-slate-900 mb-4">Role Management</h1>
 
         @if(session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
@@ -39,4 +40,9 @@
             </tbody>
         </table>
     </main>
+    @else
+        <div class="w-3/4 p-6 bg-slate-50 min-h-screen w-full flex items-center justify-center">
+            <h2 class="text-2xl font-bold text-red-600">You do not have permission to view this page.</h2>
+        </div>
+    @endcan
 </x-app-layout>
