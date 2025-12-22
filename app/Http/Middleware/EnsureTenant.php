@@ -26,10 +26,9 @@ class EnsureTenant
                     ->with('error', 'No tenant assigned to your account. Please contact administrator.');
             }
 
-            // Set global tenant scope in config
+
             config(['app.current_tenant_id' => $user->tenant_id]);
 
-            // Set in session for easy access
             session(['tenant_id' => $user->tenant_id]);
         }
 
